@@ -1,5 +1,5 @@
 <template>
-    <router-link to="/Beranda" id="link" v-if="this.$route.path!=='/Beranda' && this.$route.path!=='/Maps' && this.$route.path!=='/Bantuan'">
+    <router-link to="/Beranda" id="link" v-if="this.$route.path!=='/Beranda' && this.$route.path!=='/Maps' && this.$route.path!=='/Bantuan' && this.$route.path!=='/Login'">
         <h1 id="welcome">SELAMAT DATANG DI ISAI</h1>
     </router-link>
     <router-view />

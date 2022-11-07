@@ -10,6 +10,9 @@
         <v-divider class="menus"></v-divider>
         <!-- Konten Menu -->
         <v-list nav>
+            <router-link to="/Login" class="menus" @click="login()">
+                <v-list-item prepend-icon="mdi-help-circle" value="Login">Login</v-list-item>
+            </router-link>
             <router-link to="/Beranda" class="menus" @click="beranda()">
                 <v-list-item prepend-icon="mdi-home" value="beranda">Beranda</v-list-item>
             </router-link>
@@ -19,6 +22,7 @@
             <router-link to="/Bantuan" class="menus" @click="bantuan()">
                 <v-list-item prepend-icon="mdi-help-circle" value="bantuan">Bantuan</v-list-item>
             </router-link>
+
         </v-list>
     </v-navigation-drawer>
     <!-- Isi Konten -->

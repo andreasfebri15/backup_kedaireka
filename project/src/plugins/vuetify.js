@@ -1,7 +1,7 @@
 // Styles
 import '@mdi/font/css/materialdesignicons.css'
 import 'vuetify/styles'
-
+import "bootstrap/dist/css/bootstrap.min.css"
 // Vuetify
 import { createVuetify } from 'vuetify'
 

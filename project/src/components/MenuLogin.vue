@@ -33,6 +33,8 @@
     
 </style> -->
 <template>
+  <Leftside />
+  <v-container style="justify-content: center; width: 800px; height: 649px;">
   <div class="row justify-content-md-center">
     <div class="col-md-6">
       <div class="card">
@@ -82,10 +84,19 @@
       </div>
     </div>
   </div>
+</v-container>
 </template>
 
 <script>
+import Leftside from "../components/LeftSide.vue"
+
+
 export default {
+  components: {
+        Leftside
+    },
+    name: 'v-container',
+
 methods: {
 beranda() {
   if (this.items.length < 3) {

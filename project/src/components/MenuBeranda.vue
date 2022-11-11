@@ -1,11 +1,11 @@
 <template>
     <Leftside />
     <v-container style="justify-content: center; width: 800px; height: 649px;">
-            <v-breadcrumbs :items="items">
-                <template v-slot:divider>
-                    <v-icon icon="mdi-chevron-right"></v-icon>
-                </template>
-            </v-breadcrumbs>
+        <v-breadcrumbs :items="items">
+            <template v-slot:divider>
+                <v-icon icon="mdi-chevron-right"></v-icon>
+            </template>
+        </v-breadcrumbs>
         <v-row class="text-center">
             <v-col cols="12">
                 <v-img :src="require('../images/1.png')" contain height="200" />
@@ -53,7 +53,7 @@ export default {
 
     data: () => ({
         items: [
-            'Dashboard', 
+            'Dashboard',
             'Beranda']
     })
 }

@@ -1,111 +1,137 @@
-<!-- <template>
-    <div class="login">
-        <form>
-            <h3>Login</h3>
-            <div class="form-group">
-                <label>Email</label>
-                <input type="email" class="form-control" placeholder="Email">
-            </div>
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" class="form-control" placeholder="Password">
-            </div>
-            <button type="submit" class="btn btn-primary btn-block">Login</button>
-            <p class="forgot-password text-right mt-2 mb-4">
-                <router-link to="/forgot-password">Forgot password ?</router-link>
-            </p>
-            <div class="social-icons">
-                <ul>
-                    <li><a href="#"><i class="fa fa-google"></i></a></li>
-                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                </ul>
-            </div>
-        </form>
-    </div>
-</template>
-<script>
-    export default {
-        name:'Log-In'
-    }
-</script>
-<style>
-    
-</style> -->
 <template>
-  <Leftside />
-  <v-container style="justify-content: center; width: 800px; height: 649px;">
-  <div class="row justify-content-md-center">
-    <div class="col-md-6">
-      <div class="card">
-        <div class="card-header">Login</div>
-        <div class="card-body">
-          <form>
-            <div class="form-group">
-              <label for="email">Email address</label>
-              <input type="email" class="form-control" placeholder="Email..">
-            </div>
-            <div class="form-group">
-              <label for="password">Password</label>
-              <input type="password" class="form-control" placeholder="Password..">
-            </div><br>
-            <router-link to="/Beranda" class="menus" @click="beranda()">
-            <button type="submit" class="btn btn-primary">Login</button>
-              </router-link>
-            <!-- <div class="social-icons">
-              <ul>
-                  <li><a href="#"><i class="fas fa-google"></i></a></li>
-                  <li><a href="#"><i class="fas fa-facebook"></i></a></li>
-                  <li><a href="#"><i class="fas fa-twitter"></i></a></li>
-              </ul>
-          </div> -->
-          <div class="header">
-            <div class="container">
-              <nav class="navbar navbar-expand">
-                <div class="collapse navbar-collapse" id="header_menu">
-                  <ul class="navbar-nav ml-auto">
-                    <li class="flex-shrink-0 nav-item">
-                      <a class="nav-link" href="#"><i class="fas fa-heart fa-2x" style="vertical-align: middle;"></i>Github</a>
-                    </li>
-                    <li class="flex-shrink-0 nav-item">
-                      <a class="nav-link" href="#"><i class="fas fa-shopping-cart fa-2x" style="vertical-align: middle;"></i> LinkedIn</a>
-                    </li>
-                    <li class="flex-shrink-0 nav-item">
-                      <i class="fas fa-user fa-2x" style="vertical-align: middle;"></i>
-                      <a class="nav-link" href="#">Google</a>
-                    </li>
-                  </ul>
-                </div>
-              </nav>
-            </div>
-          </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</v-container>
+  <v-container style="width: 800px; height: 649px">
+    <v-breadcrumbs :items="items">
+            <template v-slot:divider>
+                <v-icon icon="mdi-chevron-right"></v-icon>
+            </template>
+        </v-breadcrumbs>
+    <v-card style="width: 400px; left: 38%; position: absolute; padding: 15px; background-color: lightsteelblue;">
+      <img src="https://download.logo.wine/logo/Microsoft_account/Microsoft_account-Logo.wine.png" style="margin-left: 32%; height: 100px; width: 150px; position:relative;">
+      <v-form v-model="valid" ref="form" lazy-validation>
+            <v-container>
+              <v-row>
+                <v-col>
+                  <v-text-field
+                    v-model="email"
+                    :rules="emailRules"
+                    label="E-mail"
+                    required
+                  >
+                  </v-text-field>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col>
+                  <v-text-field
+                    v-model="password"
+                    :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                    :rules="[rules.required]"
+                    :type="show1 ? 'text' : 'password'"
+                    label="Password"
+                    counter
+                    @click:append="show1 = !show1"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+              <p v-if="errMsg">{{ errMsg }}</p>
+            </v-container>
+          </v-form>
+          <v-container>
+            <v-btn style="float: left"
+            :disabled="!valid"
+            color="success"
+            class="mr-4"
+            @click="register"
+            >
+              Login
+            </v-btn>
+            <v-btn style="float: right"
+            @click="signInWithGoogle"
+            color="blue"
+            >
+            <img src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png" style="background-color:white ;margin-left:-15px ;height: 35px; width:35px; border-radius: 3px;">&nbsp; Sign in
+            </v-btn>
+          </v-container>
+    </v-card>
+  </v-container>
 </template>
 
+<script setup>
+import { ref } from "vue";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
+import { useRouter } from "vue-router";
+const email = ref("");
+const password = ref("");
+const errMsg = ref();
+const router = useRouter();
+
+const register = () => {
+  const auth = getAuth();
+  signInWithEmailAndPassword(getAuth(), email.value, password.value)
+    .then(data => {
+      localStorage.setItem('authenticated', true);
+      console.log(auth.currentUser);
+      router.push("/Admin_Page");
+    })
+    .catch(error => {
+      console.log(error.code);
+      switch (error.code) {
+        case "auth/invalid-email":
+          errMsg.value = "Invalid email";
+          break;
+        case "auth/user-not-found":
+          errMsg.value = "Account anda tidak ditemukan";
+          break;
+        case "auth/wrong-password":
+          errMsg.value = "Password anda salah";
+          break;
+        default:
+          errMsg.value = "Email or password was incorrect";
+          break;
+      }
+    });
+};
+
+const signInWithGoogle = () => {
+  const provider = new GoogleAuthProvider();
+  const auth = getAuth();
+  signInWithPopup(auth, provider)
+  .then(result =>{
+    const user = auth.currentUser;
+    if (user.email === "imanuel.vicky@ti.ukdw.ac.id" || user.email === "imanuelvs19@gmail.com"){
+      localStorage.setItem('authenticated', true);
+      router.push("/Admin_Page");
+    }else{
+      window.alert("Akun google tidak terdaftar");
+      router.push("/Login");
+    }
+  })
+
+
+};
+</script>
+
 <script>
-import Leftside from "../components/LeftSide.vue"
-
-
 export default {
-  components: {
-        Leftside
+
+
+  data: () => ({
+    items: ["Dashboard", "Login (Admin)"],
+    valid: false,
+    email: "",
+    emailRules: [
+      v => !!v || "E-mail is required",
+      v => /.+@.+/.test(v) || "E-mail must be valid",
+    ],
+    show1: false,
+    rules: {
+      required: value => !!value || "Required.",
     },
-    name: 'v-container',
-
-methods: {
-beranda() {
-  if (this.items.length < 3) {
-    this.items.push('Beranda')
-  }
-  else {
-    this.items.shift()
-    this.items.push('Beranda')
-  }
-}}}
-
+  }),
+};
 </script>

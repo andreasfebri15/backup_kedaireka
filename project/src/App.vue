@@ -1,16 +1,18 @@
 <template>
   <v-app>
-    <Dashboard />
+    <Dashboard/>
+    <Leftside v-if="this.$route.path !== '/'" />
   </v-app>
 </template>
 
 <script>
 import Dashboard from "./components/MenuDashboard.vue";
-import { RouterLink, RouterView } from "vue-router";
+import Leftside from "./components/LeftSide.vue"
+// import { RouterLink, RouterView } from "vue-router";
 
 import { onMounted, ref } from "vue";
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import router from "./router";
+import { getAuth, onAuthStateChanged,  } from "firebase/auth";
+// import router from "./router";
 
 const isLoggedIn = ref(false);
 
@@ -31,6 +33,7 @@ export default {
 
   components: {
     Dashboard,
+    Leftside
   },
 
   data: () => ({

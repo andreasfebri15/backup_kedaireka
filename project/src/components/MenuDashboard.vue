@@ -7,7 +7,7 @@
       this.$route.path !== '/Maps' &&
       this.$route.path !== '/Bantuan' &&
       this.$route.path !== '/Login' &&
-      this.$route.path !== '/Uji'
+      this.$route.path !== '/Admin_Page'
     "
   >
     <h1 id="welcome">SELAMAT DATANG DI ISAI</h1>

@@ -4,18 +4,18 @@ import vuetify from "./plugins/vuetify";
 import { loadFonts } from "./plugins/webfontloader";
 import router from "./router";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import "./registerServiceWorker";
 import { initializeApp } from "firebase/app";
+
 const firebaseConfig = {
-  apiKey: "AIzaSyDEa8bobROOH8l5ce7mNtMbszemM6PjjVA",
-  authDomain: "kedaireka-cf553.firebaseapp.com",
-  projectId: "kedaireka-cf553",
-  storageBucket: "kedaireka-cf553.appspot.com",
-  messagingSenderId: "600249633194",
-  appId: "1:600249633194:web:9903cc767a073ff905c3d3",
+  apiKey: "AIzaSyDIwfCW-96NXXHlrV1om1guUoaAgOhJ4YQ",
+  authDomain: "progressive-web-45a88.firebaseapp.com",
+  projectId: "progressive-web-45a88",
+  storageBucket: "progressive-web-45a88.appspot.com",
+  messagingSenderId: "406316285774",
+  appId: "1:406316285774:web:c498efa408361eecd6a81f",
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 loadFonts();
 

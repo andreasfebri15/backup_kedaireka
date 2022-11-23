@@ -35,17 +35,6 @@
       </router-link>
     </v-list>
   </v-navigation-drawer>
-  <!-- Isi Konten -->
-  <v-main>
-    <!-- Breadcrumbs -->
-    <!-- <v-breadcrumbs :items="items">
-            <template v-slot:divider>
-                <v-icon icon="mdi-chevron-right"></v-icon>
-            </template>
-        </v-breadcrumbs> -->
-    <!-- Konten Utama -->
-    <router-view />
-  </v-main>
 </template>
 
 <script>
@@ -54,40 +43,7 @@ export default {
     items: [],
   }),
   methods: {
-    // beranda() {
-    //     if (this.items.length < 3) {
-    //         this.items.push('Beranda')
-    //     }
-    //     else {
-    //         this.items.shift()
-    //         this.items.push('Beranda')
-    //     }
-    // },
-    // maps() {
-    //     if (this.items.length < 3) {
-    //         this.items.push('Maps')
-    //     }
-    //     else {
-    //         this.items.shift()
-    //         this.items.push('Maps')
-    //     }
-    // },
-    // bantuan() {
-    //     if (this.items.length < 3) {
-    //         this.items.push('Bantuan')
-    //     } else {
-    //         this.items.shift()
-    //         this.items.push('Bantuan')
-    //     }
-    // },
-    // login() {
-    //     if (this.items.length < 3) {
-    //         this.items.push('Login')
-    //     } else {
-    //         this.items.shift()
-    //         this.items.push('Login')
-    //     }
-    // },
+
   },
 };
 </script>
@@ -100,10 +56,7 @@ export default {
   opacity: 0, 5;
   left: -30px;
 }
-/* .bg-blue-lighten-3{
-    max-height: 150px ;
-    max-width: 150px;
-    border: 1px solid white;
-    border-radius: 50%;
-} */
+.menus:hover {
+  color: black;
+}
 </style>

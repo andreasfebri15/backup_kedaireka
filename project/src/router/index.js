@@ -2,11 +2,9 @@ import { createWebHistory, createRouter } from "vue-router";
 import Beranda from "../components/MenuBeranda.vue";
 import Maps from "../components/MenuMaps.vue";
 import Bantuan from "../components/MenuBantuan.vue";
-import Home from "../components/LeftSide.vue";
-import Dashboard from "../components/MenuDashboard.vue";
 import Login from "../components/MenuLogin.vue";
-import Uji from "../components/UjiCoba.vue";
-import { getAuth } from "firebase/auth";
+import Admin_Page from "../components/AdminPage.vue";
+// import { getAuth } from "firebase/auth";
 
 const routes = [
   {
@@ -24,25 +22,16 @@ const routes = [
     name: "Bantuan",
     component: Bantuan,
   },
-  {
-    path: "/Home",
-    name: "Home",
-    component: Home,
-  },
-  {
-    path: "/Dashboard",
-    name: "Dashboard",
-    component: Dashboard,
-  },
+
   {
     path: "/Login",
     name: "Login",
     component: Login,
   },
   {
-    path: "/Uji",
-    name: "Uji",
-    component: Uji,
+    path: "/Admin_Page",
+    name: "Admin_Page",
+    component: Admin_Page,
   },
 ];
 
@@ -50,5 +39,16 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
 });
+
+// const isAuthenticated = false;
+
+router.beforeEach((to, from, next)=>{
+  const isAuthenticated = JSON.parse(localStorage.getItem('authenticated'));
+  setTimeout(() => {
+    localStorage.removeItem('authenticated');
+  }, 3600000);
+  if(to.name == "Admin_Page" && !isAuthenticated) next({name: "Login"});
+  else next();
+})
 
 export default router;

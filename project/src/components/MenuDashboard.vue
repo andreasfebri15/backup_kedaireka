@@ -1,27 +1,19 @@
 <template>
-  <router-link
-    to="/Beranda"
-    id="link"
-    v-if="
-      this.$route.path !== '/Beranda' &&
-      this.$route.path !== '/Maps' &&
-      this.$route.path !== '/Bantuan' &&
-      this.$route.path !== '/Login' &&
-      this.$route.path !== '/Admin_Page'
-    "
-  >
-    <h1 id="welcome">SELAMAT DATANG DI ISAI</h1>
+  <router-link to="/beranda" id="link" style="text-decoration: none">
+    <div
+      style="
+        background: url(https://www.tandhur.id/bg_login.png);
+        background-size: cover;
+        /* height: 649px; */
+      "
+      id="dashboard"
+    >
+      <h1 id="welcome">SELAMAT DATANG DI ISAI</h1>
+    </div>
   </router-link>
-  <router-view />
 </template>
 
 <style>
-#link {
-  background: url(https://www.tandhur.id/bg_login.png);
-  background-size: cover;
-  text-decoration: none;
-  height: 649px;
-}
 #welcome {
   color: white;
   background-color: black;
@@ -34,6 +26,42 @@
 }
 #welcome:hover {
   opacity: 0.7;
+}
+
+@media screen and (max-width: 1920px) {
+  #dashboard {
+    height: 100%;
+    width: 100%;
+  }
+  #welcome {
+    height: 100%;
+    width: 100%;
+    background-size: 50px;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  #dashboard {
+    height: 100%;
+    width: 100%;
+  }
+  #welcome {
+    height: 100%;
+    width: 100%;
+    background-size: 50px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  #dashboard {
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+  }
+  #welcome {
+    height: 100%;
+    width: 100%;
+  }
 }
 </style>
 

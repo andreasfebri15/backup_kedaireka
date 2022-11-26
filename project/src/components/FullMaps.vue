@@ -1,21 +1,3 @@
-<!-- <template>
-    <MapboxMap style="height: 400px" access-token="pk.eyJ1IjoibnVlbHZzIiwiYSI6ImNsOHE0NjM5eDF3azczdXBpcmxsMGtxM2kifQ.hjATsxH1uRXxwzZbfo5CrA" map-style="mapbox://styles/nuelvs/cl8wk0xfn000v14qsukkzdajj" :center="[110.69480464649932, -7.610613442012233]" :zoom="17">
-    
-        <MapboxMarker :lng-lat="[110.69480464649932, -7.610613442012233]" :offset="[110.69480464649932, -7.610613442012233]"/>
-
-    </MapboxMap>
-</template>
-
-<script setup>
-import { MapboxMap, MapboxMarker } from '@studiometa/vue-mapbox-gl';
-import 'mapbox-gl/dist/mapbox-gl.css'
-</script> -->
-
-
-
-
-
-
 <template>
     <div id="mapContainer"></div>
 </template>
@@ -33,13 +15,8 @@ export default {
             accessToken: "pk.eyJ1IjoibnVlbHZzIiwiYSI6ImNsOHE0NjM5eDF3azczdXBpcmxsMGtxM2kifQ.hjATsxH1uRXxwzZbfo5CrA",
         };
     },
-    components: {
-        // Mapboxmarker
-    },
-
     mounted() {
         mapboxgl.accessToken = this.accessToken;
-
         var map = new mapboxgl.Map({
             container: "mapContainer",
             style: "mapbox://styles/nuelvs/cl8wk0xfn000v14qsukkzdajj",
@@ -105,6 +82,11 @@ export default {
                     'circle-stroke-color': 'white'
                 }
             });
+            map.addLayer({
+                'id': 'sample-label',
+                'type': 'symbol',
+                source: 'sample'
+            })
             map.on('click', 'sample-layer', (e) => {
                 const geometry = e.features[0].geometry;
                 const properties = e.features[0].properties;
@@ -116,7 +98,18 @@ export default {
                 }
                 new mapboxgl.Popup()
                     .setLngLat(coordinates)
-                    .setHTML("<p>"+kode+"</p>")
+                    .setHTML('<table>\
+                        <tr>\
+                            <td colspan="2">Titik: "'+kode+'"</td>\
+                        </tr>\
+                        <tr>\
+                            <td colspan="2">No: "'+e.features[0].properties['No']+'"</td>\
+                        </tr>\
+                        <tr>\
+                            <td colspan="2">RI:"'+e.features[0].properties['float_RI']+'"</td>\
+                        </tr>\
+                        </table>'
+                    )
                     .addTo(map);
                 }
                 map.on('mouseenter', 'sample-layer', () => {
@@ -128,70 +121,15 @@ export default {
                     map.getCanvas().style.cursor = '';
                 });
             });
-            // map.addLayer({
-            //     'id': 'sample-layer',
-            //     'type': 'circle',
-            //     'source': 'sample',
-            //     'paint': {
-            //         'circle-radius': 4,
-            //         'circle-stroke-width': 2,
-            //         'circle-color': 'red',
-            //         'circle-stroke-color': 'white'
-            //     }
-            // })
         })
-        // new mapboxgl.Marker({
-        //     color: "blue",
-        // })
-        // .setLngLat([110.69480464649932, -7.610613442012233])
-        // .setPopup(new mapboxgl.Popup().setHTML(
-        //     "<table>\
-        //         <tr>\
-        //             <td colspan='2'>Hello World!</td>\
-        //         </tr>\
-        //     </table>"
-        // ))
-        // .addTo(map);
     },
 };
 </script>
 
 <style lang="scss">
 #mapContainer {
-    width: 800px;
-    height: 480px;
+    width: 100%;
+    height: 90%;
 }
-.mapboxgl-popup-content-wrapper{
-    padding: 0px;
-}
+
 </style>
-
-
-
-
-
-<!-- <template>
-    <MglMap id="mapContainer" :accessToken="accessToken" :mapStyle="mapStyle" :center="coordinates">
-    </MglMap>
-</template>
-
-<script>
-import Mapbox from "mapbox-gl";
-import { MglMap,  } from "vue-mapbox";
-
-export default {
-    components: {
-        MglMap,
-    },
-    data() {
-        return {
-            accessToken: "pk.eyJ1IjoibnVlbHZzIiwiYSI6ImNsOHE0NjM5eDF3azczdXBpcmxsMGtxM2kifQ.hjATsxH1uRXxwzZbfo5CrA", // your access token. Needed if you using Mapbox maps
-            mapStyle: "mapbox://styles/nuelvs/cl8wk0xfn000v14qsukkzdajj", // your map style
-            coordinates: [110.69480464649932, -7.610613442012233],
-        };
-    },
-    created(){
-        this.Mapbox = Mapbox;
-    }
-};
-</script> -->

@@ -1,5 +1,5 @@
 export const datatren = {
-    type: "line",
+    type: "bar",
     data: {
         labels: null,
         datasets: [

@@ -10,9 +10,10 @@
         <h1><v-icon icon="mdi-help-circle"></v-icon> PUSAT BANTUAN</h1>
       </v-col>
     </v-row>
+    <v-img src="../assets/bantu.svg" id="gambar_bantuan"> </v-img>
     <v-row id="bantuan">
       <v-col>
-        <v-expansion-panels variant="accordion">
+        <v-expansion-panels variant="accordion" id="accord">
           <v-expansion-panel>
             <v-expansion-panel-title
               expand-icon="mdi-plus"
@@ -22,7 +23,7 @@
               <v-icon icon="mdi-information"></v-icon>[Tentang Karbon] Teori
               Karbon
             </v-expansion-panel-title>
-            <v-expansion-panel-text class="bg-blue-lighten-5">
+            <v-expansion-panel-text>
               Dalam manusia karbon sekitar 20% dan ada beberapa karbon yang
               terdapat dalam tumbuhan. Bagian yang termasuk dalam teori karbon
               <ol>
@@ -49,7 +50,7 @@
               <v-icon icon="mdi-chat-question"></v-icon>[Tentang Karbon] Mengapa
               karbon penting?
             </v-expansion-panel-title>
-            <v-expansion-panel-text class="bg-blue-lighten-5">
+            <v-expansion-panel-text>
               <ol>
                 <li>
                   Mampu mengevalusiasi suatu sektor untuk menghitung antara
@@ -68,7 +69,7 @@
               <v-icon icon="mdi-chat-question"></v-icon>Bagaimana cara mengedit
               data pada maps?
             </v-expansion-panel-title>
-            <v-expansion-panel-text class="bg-blue-lighten-5">
+            <v-expansion-panel-text>
               <div>
                 <ol>
                   <li>Silakan Login terlebih dahulu</li>
@@ -92,7 +93,7 @@
               <v-icon icon="mdi-chat-question"></v-icon>Bagaimana cara
               menghubungi Customer Service?
             </v-expansion-panel-title>
-            <v-expansion-panel-text class="bg-blue-lighten-5">
+            <v-expansion-panel-text>
               <div>
                 <ol>
                   <li>Silakan klik menu beranda</li>
@@ -113,7 +114,7 @@
               <v-icon icon="mdi-chat-question"></v-icon>Situs tidak bisa
               diakses?
             </v-expansion-panel-title>
-            <v-expansion-panel-text class="bg-blue-lighten-5">
+            <v-expansion-panel-text>
               <div>
                 <ul>
                   <li>Cek koneksi internet</li>
@@ -144,40 +145,78 @@ export default {
 
 <style>
 .panel {
-  background-color: #4db6ac;
-  font-weight: bold;
+  color: white;
+  background-color: #134280;
   font-size: 18px;
 }
-
-/* dekstop */
-@media screen and (min-width: 1920px) {
-  #container-1 {
-    height: 100%;
-    width: 1000px;
-  }
-  #bantuan {
-    font-size: 15px;
-  }
+.bg_acc {
+  background-color: white;
 }
 
-/* tablet/laptop*/
-@media screen and (max-width: 1600px) {
-  #container-1 {
-    height: 100%;
-    width: 900px;
-  }
-  #bantuan {
-    font-size: 15px;
-  }
-}
-
-@media screen and (max-width: 600px) {
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
   #container-1 {
     height: 100%;
     width: 100%;
   }
   #bantuan {
     font-size: 15px;
+    color: white;
+  }
+}
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  #container-1 {
+    height: 100%;
+    width: 100%;
+  }
+  #bantuan {
+    font-size: 15px;
+    color: white;
+  }
+}
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  #container-1 {
+    height: 100%;
+    width: 100%;
+  }
+  #bantuan {
+    font-size: 15px;
+    color: white;
+  }
+}
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  #container-1 {
+    height: 100%;
+    width: 100%;
+  }
+  #bantuan {
+    font-size: 15px;
+    color: white;
+  }
+  #gambar_bantuan {
+    float: left;
+    width: 45%;
+  }
+}
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  #container-1 {
+    height: 100%;
+    width: 900px;
+  }
+  #bantuan {
+    font-size: 15px;
+    color: white;
+  }
+  #gambar_bantuan {
+    float: left;
+    width: 45%;
+  }
+  #accord {
+    width: 100%;
   }
 }
 </style>

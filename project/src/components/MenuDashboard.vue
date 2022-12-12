@@ -1,14 +1,19 @@
 <template>
   <router-link to="/beranda" id="link" style="text-decoration: none">
-    <div
-      style="
-        background: url(https://www.tandhur.id/bg_login.png);
-        background-size: cover;
-        /* height: 649px; */
-      "
-      id="dashboard"
-    >
-      <h1 id="welcome">SELAMAT DATANG DI ISAI</h1>
+    <div id="background-1" style="background-size: cover; height: 100%">
+      <h2 id="welcome">
+        SELAMAT DATANG DI
+
+        <v-img
+          src="../assets/logo_beranda2.png"
+          width="30%"
+          style="display: block; margin: auto; padding-top: 0%"
+        >
+        </v-img>
+
+        <br />
+        <span>Klik dimana saja untuk melanjutkan</span>
+      </h2>
     </div>
   </router-link>
 </template>
@@ -18,38 +23,18 @@
   color: white;
   background-color: black;
   opacity: 0;
-  height: 649px;
+  height: 100%;
   text-align: center;
-  padding-top: 20%;
-  font-size: 50px;
+  padding-top: 5%;
+  font-size: 40px;
   transition-duration: 2s;
 }
 #welcome:hover {
   opacity: 0.7;
 }
-
-@media screen and (max-width: 1920px) {
-  #dashboard {
-    height: 100%;
-    width: 100%;
-  }
-  #welcome {
-    height: 100%;
-    width: 100%;
-    background-size: 50px;
-  }
-}
-
-@media screen and (max-width: 1200px) {
-  #dashboard {
-    height: 100%;
-    width: 100%;
-  }
-  #welcome {
-    height: 100%;
-    width: 100%;
-    background-size: 50px;
-  }
+#welcome > span {
+  font-size: medium;
+  font-weight: normal;
 }
 
 @media screen and (max-width: 600px) {
@@ -61,6 +46,24 @@
   #welcome {
     height: 100%;
     width: 100%;
+  }
+  #background-1 {
+    background: url(https://wallpaperaccess.com/full/1849570.jpg);
+  }
+}
+
+@media screen and (min-width: 1920px) {
+  #dashboard {
+    height: 100%;
+    width: 100%;
+  }
+  #welcome {
+    height: 100%;
+    width: 100%;
+    background-size: 50px;
+  }
+  #background-1 {
+    background: url(https://www.tandhur.id/bg_login.png);
   }
 }
 </style>

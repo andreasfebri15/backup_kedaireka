@@ -1,38 +1,177 @@
 <template>
-  <v-container style="width: 900px; height: 100%;" id="elem">
-    <div>
-      <v-btn @click="logout" style="float: right">
-        Logout
-      </v-btn>
-      <p id="alert">This page will be unable to change or reload after 1 hour</p>
+  <v-container id="container-1">
+    <v-breadcrumbs :items="items">
+      <template v-slot:divider>
+        <v-icon icon="mdi-chevron-right"></v-icon>
+      </template>
+    </v-breadcrumbs>
+    <v-row>
+      <v-col>
+        <router-link to="/create_menu" class="crud">
+          <v-btn>Create</v-btn>
+        </router-link>
+      </v-col>
+      <v-col>
+        <p id="alert">
+          This page will be unable to change or reload after 1 hour
+        </p>
+      </v-col>
+      <v-col>
+        <v-btn @click="logout" style="float: right"> Logout </v-btn>
+      </v-col>
+    </v-row>
+    <div
+      style="display: flex; justify-content: center; margin-top: 20px"
+      id="admin_page"
+    >
+      <v-table
+        fixed-header
+        height="450px"
+        style="
+          border-radius: 5px;
+          box-shadow: 0 3px 10px rgb(0 0 0 / 0.5);
+          border-radius: 6px;
+        "
+      >
+        <thead>
+          <tr>
+            <th>Kode</th>
+            <th>Lokasi</th>
+            <th>Komoditas</th>
+            <th>HST</th>
+            <th>Karbon Tanaman</th>
+            <th>Karbon Tanah</th>
+            <th>LongLat</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in content" :key="item.properties.uuid">
+            <td>{{ item.properties.titik_sample }}</td>
+            <td>{{ item.properties.location }}</td>
+            <td>{{ item.properties.comodity }}</td>
+            <td>{{ item.properties.hst }}</td>
+            <td>{{ item.properties.karbon_tanaman }}</td>
+            <td>{{ item.properties.karbon_tanah }}</td>
+            <td>{{ item.geometry.coordinates }}</td>
+            <td>
+              <v-tooltip text="Delete">
+                <template v-slot:activator="{ props }">
+                  <v-btn
+                    @click="
+                      deleteData(item.properties.uuid, item.properties.date)
+                    "
+                    class="btn"
+                    color="red"
+                    icon="mdi-trash-can"
+                    size="small"
+                    v-bind="props"
+                  >
+                  </v-btn>
+                </template>
+              </v-tooltip>
+            </td>
+          </tr>
+        </tbody>
+      </v-table>
     </div>
-    
-      <Dropzone/>
-
   </v-container>
 </template>
 
+<style>
+.crud {
+  text-decoration: none;
+}
+
+#alert {
+  font-size: 14px;
+  text-align: center;
+}
+
+@media only screen and (max-width: 600px) {
+  #container-1 {
+    height: 100%;
+    width: 100%;
+  }
+  #admin_page {
+    width: 300px;
+    height: 100%;
+  }
+}
+
+@media only screen and (min-width: 601px) {
+  #container-1 {
+    height: 900px;
+    width: 100%;
+  }
+  #upload {
+    width: 450px;
+    height: 100%;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  #container-1 {
+    height: 100%;
+    width: 900px;
+  }
+}
+</style>
+
 <script>
-import Dropzone from "./DragDrop.vue";
 import { useRouter } from "vue-router";
+import axios from "axios";
 
 export default {
-  setup(){
+  data() {
+    return {
+      content: undefined,
+      uuid: "",
+      date: "",
+      items: ["Dashboard", "Login (Admin)", "Admin Page"],
+    };
+  },
+  setup() {
     const router = useRouter();
     const logout = () => {
       localStorage.setItem("authenticated", false);
-      router.push("/Login")
+      router.push("/login");
     };
-    return {logout};
+    return { logout };
   },
-  components: {
-    Dropzone
-  }
+  methods: {
+    deleteData: function (uuid, date) {
+      this.uuid = uuid;
+      this.date = date;
+
+      console.log(this.uuid);
+      console.log(this.date);
+      if (window.confirm("Apakah data benar akan di hapus?")) {
+        axios
+          .post(
+            "https://nl227f95td.execute-api.us-east-1.amazonaws.com/dpl/maps/delete",
+            {
+              uuid: this.uuid,
+              date: this.date,
+            }
+          )
+          .catch(err => {
+            this.error = err.message;
+            console.log(this.error);
+          })
+          .then(resp => {
+            console.log(resp.data), location.reload();
+          });
+      } else {
+        location.reload();
+      }
+    },
+  },
+  mounted() {
+    axios
+      .get("https://nl227f95td.execute-api.us-east-1.amazonaws.com/dpl/maps")
+      .then(resp => {
+        this.content = resp.data.body.features;
+      });
+  },
 };
 </script>
-
-<style lang="scss" scoped>
-  #alert{
-    font-size: 14px;
-  }
-</style>

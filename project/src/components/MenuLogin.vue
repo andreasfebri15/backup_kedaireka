@@ -1,5 +1,5 @@
 <template>
-  <v-container style="width: 900px; height: 100%">
+  <v-container id="container-1">
     <v-breadcrumbs :items="items">
       <template v-slot:divider>
         <v-icon icon="mdi-chevron-right"></v-icon>
@@ -13,7 +13,7 @@
         align-items: center;
       "
     >
-      <v-card style="width: 400px; padding: 15px; background-color: #e0f7fa">
+      <v-card style="width: 400px; padding: 15px; background-color: white">
         <img
           src="https://download.logo.wine/logo/Microsoft_account/Microsoft_account-Logo.wine.png"
           style="
@@ -56,13 +56,19 @@
           <v-btn
             style="float: left"
             :disabled="!valid"
-            color="success"
+            color="#134280"
             class="mr-4"
             @click="register"
+            id="button_login"
           >
             Login
           </v-btn>
-          <v-btn style="float: right" @click="signInWithGoogle" color="blue">
+          <v-btn
+            style="float: right"
+            @click="signInWithGoogle"
+            color="#134280"
+            id="button_sign"
+          >
             <img
               src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
               style="
@@ -79,6 +85,51 @@
     </div>
   </v-container>
 </template>
+<style>
+#button_login {
+  color: white;
+}
+
+#button_sign {
+  color: white;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  #container-1 {
+    height: 900px;
+    width: 100%;
+  }
+}
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 601px) {
+  #container-1 {
+    height: 900px;
+    width: 100%;
+  }
+}
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  #container-1 {
+    height: 100%;
+    width: 100%;
+  }
+}
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  #container-1 {
+    height: 100%;
+    width: 100%;
+  }
+}
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  #container-1 {
+    height: 100%;
+    width: 900px;
+  }
+}
+</style>
 
 <script setup>
 import { ref } from "vue";
@@ -89,11 +140,19 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import { useRouter } from "vue-router";
+import {
+  collection,
+  query,
+  doc,
+  getDocs,
+  where,
+  onSnapshot,
+} from "@firebase/firestore";
+import db from "./../firebase/init.js";
 const email = ref("");
 const password = ref("");
 const errMsg = ref();
 const router = useRouter();
-
 const register = () => {
   const auth = getAuth();
   signInWithEmailAndPassword(getAuth(), email.value, password.value)
@@ -124,9 +183,14 @@ const register = () => {
 const signInWithGoogle = () => {
   const provider = new GoogleAuthProvider();
   const auth = getAuth();
-  signInWithPopup(auth, provider).then(result => {
+
+  signInWithPopup(auth, provider).then(async result => {
     const user = auth.currentUser;
-    if (user.email === "imanuel.vicky@ti.ukdw.ac.id") {
+
+    const q = query(collection(db, "user"), where("uid", "==", user.uid));
+    const querySnap = await getDocs(q);
+
+    if (querySnap.docs.length == 1) {
       localStorage.setItem("authenticated", true);
       router.push("/admin_page");
     } else {

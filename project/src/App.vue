@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <Leftside v-if="this.$route.path !== '/'" />
-    <v-main class="bg-cyan-lighten-4">
+    <v-main>
       <router-view></router-view>
     </v-main>
   </v-app>
